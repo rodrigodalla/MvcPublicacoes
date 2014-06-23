@@ -1,0 +1,72 @@
+﻿@using MvcPublicacoes.Controllers
+@model IEnumerable<MvcPublicacoes.Models.Publicacao>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Lista de Publicações</h2>
+
+<p>
+    @Html.ActionLink("Nova Publicação", "Create")
+</p>
+<table>
+    <tr>
+        <th @((ViewBag.PubOrder == PubOrder.Titulo) ? "class=" + ViewBag.Order : "")>
+            @Html.ActionLink("Título", "Index", new { pubOrder = PubOrder.Titulo, order = (ViewBag.PubOrder == PubOrder.Titulo && ViewBag.Order == Order.asc) ? Order.desc : Order.asc })
+        </th>
+
+        <th @((ViewBag.PubOrder == PubOrder.DtPublicacao) ? "class=" + ViewBag.Order : "")>
+            @Html.ActionLink("Ano", "Index", new { pubOrder = PubOrder.DtPublicacao, order = (ViewBag.PubOrder == PubOrder.DtPublicacao && ViewBag.Order == Order.asc) ? Order.desc : Order.asc })
+        </th>
+
+        <th @((ViewBag.PubOrder == PubOrder.Autor) ? "class=" + ViewBag.Order : "")>
+            @Html.ActionLink("Autor", "Index", new { pubOrder = PubOrder.Autor, order = (ViewBag.PubOrder == PubOrder.Autor && ViewBag.Order == Order.asc) ? Order.desc : Order.asc })
+        </th>
+
+        <th @((ViewBag.PubOrder == PubOrder.Tipo) ? "class=" + ViewBag.Order : "")>
+            @Html.ActionLink("Tipo", "Index", new { pubOrder = PubOrder.Tipo, order = (ViewBag.PubOrder == PubOrder.Tipo && ViewBag.Order == Order.asc) ? Order.desc : Order.asc })
+        </th>
+
+        <th @((ViewBag.PubOrder == PubOrder.Instituicao) ? "class=" + ViewBag.Order : "")>
+            @Html.ActionLink("Instituição", "Index", new { pubOrder = PubOrder.Instituicao, order = (ViewBag.PubOrder == PubOrder.Instituicao && ViewBag.Order == Order.asc) ? Order.desc : Order.asc })
+        </th>
+
+        <th @((ViewBag.PubOrder == PubOrder.Situacao) ? "class=" + ViewBag.Order : "")>
+            @Html.ActionLink("Situação", "Index", new { pubOrder = PubOrder.Situacao, order = (ViewBag.PubOrder == PubOrder.Situacao && ViewBag.Order == Order.asc) ? Order.desc : Order.asc })
+        </th>
+
+        <th>
+            Ações
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Titulo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DtPublicacao.Year)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Autor.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TipoPublicacao.Descricao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Instituicao.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Situacao.Descricao)
+        </td>
+        <td>
+            @Html.ActionLink("Detalhes", "Details", new { id = item.IdPublicacao }) |
+            @Html.ActionLink("Editar", "Edit", new { id=item.IdPublicacao }) |
+            @Html.ActionLink("Excluir", "Delete", new { id=item.IdPublicacao })
+        </td>
+    </tr>
+}
+
+</table>
