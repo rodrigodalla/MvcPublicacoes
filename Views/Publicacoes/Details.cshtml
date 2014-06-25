@@ -4,7 +4,9 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Detalhes da Publicação</h2>
+<hgroup class="title">
+    <h1>Detalhes da Publicação</h1>
+</hgroup>
 
 <fieldset>
     <legend>Publicacao</legend>
@@ -50,7 +52,7 @@
     <div class="display-field">
         @Html.DisplayFor(model => model.Situacao.Descricao)
     </div>
-
+    
     <div class="display-label">
         @Html.LabelFor(model => model.Referencia)
     </div>
@@ -74,6 +76,9 @@
 
 </fieldset>
 <p>
-    @Html.ActionLink("Editar", "Edit", new { id=Model.IdPublicacao }) |
+@if (Roles.GetRolesForUser(User.Identity.Name).Contains("Administrador") || Model.Autor.UserId.Equals(WebSecurity.GetUserId(User.Identity.Name)))
+{
+    @Html.ActionLink("Editar |", "Edit", new { id=Model.IdPublicacao })
+}
     @Html.ActionLink("Voltar para Lista", "Index")
 </p>

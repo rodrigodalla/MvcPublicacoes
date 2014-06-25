@@ -1,11 +1,13 @@
 ﻿@model MvcPublicacoes.Models.RegisterModel
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Criar Conta";
 }
 
 <hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>Create a new account.</h2>
+    <h1>@ViewBag.Title</h1>
+    <p>
+        <h2>Informe seus dados para criar uma conta de Pesquisador:</h2>
+    </p>
 </hgroup>
 
 @using (Html.BeginForm()) {
@@ -15,6 +17,10 @@
     <fieldset>
         <legend>Registration Form</legend>
         <ol>
+            <li>
+                @Html.LabelFor(m => m.Name)
+                @Html.TextBoxFor(m => m.Name)
+            </li>
             <li>
                 @Html.LabelFor(m => m.UserName)
                 @Html.TextBoxFor(m => m.UserName)
@@ -28,7 +34,7 @@
                 @Html.PasswordFor(m => m.ConfirmPassword)
             </li>
         </ol>
-        <input type="submit" value="Register" />
+        <input type="submit" value="Criar" />
     </fieldset>
 }
 
