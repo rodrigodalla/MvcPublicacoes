@@ -1,0 +1,17 @@
+﻿@model MvcPublicacoes.Models.Publicacao
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Confirmação de Exclusão</h2>
+
+<h3>Você tem certeza que deseja excluir a publicação: @Model.Titulo?</h3>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Excluir" /> |
+        @Html.ActionLink("Voltar para Lista", "Index")
+    </p>
+}
