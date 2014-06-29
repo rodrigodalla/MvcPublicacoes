@@ -1,0 +1,76 @@
+﻿@model IEnumerable<MvcPublicacoes.Models.QtdPublicacoesLocal>
+
+@{
+    ViewBag.Title = "Mapa";
+}
+
+<hgroup class="title">
+    <h1>Distribuição de Publicações por Localidade</h1>
+</hgroup>
+
+<section id="Map">
+
+    <style type="text/css">
+        #map-canvas {
+            height: 700px;
+        }
+    </style>
+
+    <script type="text/javascript" src="http://www.google.com/jsapi?autoload={'modules':[{name:'maps',version:3,other_params:''}]}"></script>
+    <script type="text/javascript">
+
+        var pubmap = {};
+        var pubCircle;
+        var i = 0;
+
+        function addCircle(lat, lng, qtd) {
+            pubmap[i] = {
+                center: new google.maps.LatLng(parseFloat(lat), parseFloat(lng)),
+                publicacoes: qtd * 6000
+            };
+            i++;
+        }
+
+        @foreach (MvcPublicacoes.Models.QtdPublicacoesLocal item in Model)
+        {
+            @:addCircle('@item.Latitude', '@item.Longitude', '@item.quantidade');
+        }
+
+        function init() {
+            var mapDiv = document.getElementById('map-canvas');
+
+            var map = new google.maps.Map(mapDiv, {
+                //Mapa centralizado em curitiba
+                center: new google.maps.LatLng(-25.4200388, -49.2650973),
+                zoom: 6,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+
+            //Popula os círculos no mapa
+            for (var pub in pubmap) {
+                var publicacoesOptions = {
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.35,
+                    map: map,
+                    center: pubmap[pub].center,
+                    radius: Math.sqrt(pubmap[pub].publicacoes) * 100
+                };
+                pubCircle = new google.maps.Circle(publicacoesOptions);
+            }
+        }
+
+        google.maps.event.addDomListener(window, 'load', init);
+
+    </script>
+
+    <div id="map-canvas"></div>
+
+</section>
+
+<div>
+    @Html.ActionLink("Voltar para Lista", "Index")
+</div>
+
